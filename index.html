@@ -1,368 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FOOD PROVIDER WEBSITE</title>
+  <title>Zoya - Portfolio</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fffdf7; color: #333; }
-    nav.navbar { background-color: #a5cfd1; padding: 10px 20px; flex-wrap: wrap; }
-    .nav-top { display: flex; align-items: center; gap: 10px; }
-    .logo img { height: 60px; width: auto; }
-    .brand-name { color: white; font-size: 28px; font-weight: bold; text-shadow: 1px 1px 3px #000; }
-    .nav-bottom { display: flex; align-items: center; width: 100%; margin-top: 10px; flex-wrap: wrap; }
-    .nav-center { display: flex; justify-content: center; align-items: center; gap: 10px; flex: 1; }
-    .nav-center a { color: white; text-decoration: none; font-weight: bold; padding: 8px 14px; border-radius: 5px; transition: background 0.3s, transform 0.2s; cursor: pointer; }
-    .nav-center a:hover { background-color: #007777; transform: scale(.80); }
-    .nav-search { display: flex; align-items: center; gap: 5px; }
-    .search-input { padding: 6px 10px; border: none; border-radius: 5px; outline: none; width: 160px; }
-    .search-btn { padding: 6px 10px; background-color: white; border: none; border-radius: 5px; cursor: pointer; transition: 0.3s, transform 0.2s; }
-    .search-btn:hover { background-color: #ddd; transform: scale(1.05); }
-
-    /* 🔍 Search Result Popup */
-    #search-popup {
-      display: none; position: absolute; top: 90px; left: 50%; transform: translateX(-50%);
-      background: #fff; border: 2px solid #a5cfd1; border-radius: 12px; padding: 20px;
-      width: 60%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.25); z-index: 1000;
-    }
-    #search-popup h3 { margin-bottom: 10px; color: #333; }
-    #search-popup button.close-btn { position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-size: 20px; cursor: pointer; color: #333; }
-    #search-result { font-size: 18px; margin: 10px 0; }
-    #search-result button { background: #25D366; color: white; padding: 8px 14px; border: none; border-radius: 8px; cursor: pointer; }
-    #search-result button:hover { background: #1eb346; }
-
-    .slider { height: 500px; width: 100%; overflow: hidden; position: relative; }
-    .slider img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 1s ease-in-out; }
-    .slider img.active { opacity: 1; }
-    #main-content { min-height: 500px; position: relative; }
-    #content-container { width: 100%; height: 500px; display: none; margin-top: 0; }
-    #content-frame { width: 100%; height: 100%; border: none; }
-
-    .footer { background-color: #2c3e50; color: #ecf0f1; padding: 30px 15px; text-align: center; font-size: 16px; line-height: 1.6; }
-    .footer p { margin-bottom: 12px; }
-    .footer p strong { font-size: 18px; color: #f1c40f; }
-    .footer p a { color: #3498db; text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
-    .footer p a:hover { color: #f1c40f; }
-    .footer .icons a { background-color: #34495e; padding: 12px; width: 48px; height: 48px; border-radius: 50%; display: inline-block; margin: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.25); transition: 0.3s, transform 0.3s; }
-    .footer .icons a:hover { background-color: #1abc9c; transform: translateY(-4px) scale(1.1); }
-    .footer .icons img { width: 24px; height: 24px; }
-    #whatsapp-bubble { position: fixed; bottom: 5cm; right: 20px; background-color: #25D366; color: white; padding: 12px 18px; border-radius: 30px; display: flex; align-items: center; gap: 10px; box-shadow: 0px 4px 6px rgba(0,0,0,0.3); font-weight: bold; font-size: 14px; text-decoration: none; z-index: 9999; transition: transform 0.2s, background 0.3s; 
-  z-index: 99999 !important;}
-    #whatsapp-bubble img { width: 28px; height: 28px; }
-    #whatsapp-bubble:hover { transform: scale(1.05); background-color: #20bd5a; }
-        /* Make proceed button always visible at bottom-right */
-      
-/* Search Popup */
-#search-popup {
-    position: fixed;
-    top: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 999;
-    background: white;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    display: none;
-}
-
-/* Proceed Button */
-#proceed-btn {
-    position: fixed;
-    bottom: 100px; /* WhatsApp bubble ke upar space */
-    right: 20px;
-    z-index: 9999; /* bubble se upar */
-    padding: 12px 18px;
-    background-color: #26a116;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-@media screen and (max-width: 768px){
-    #proceed-btn {
-        bottom: 120px; /* mobile me bubble ke upar thoda extra */
-    }
-}
-/* Optional: search input & buttons styling */
-#searchForm input[type="text"] {
-    padding: 8px;
-    width: 200px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-#searchForm button {
-    padding: 8px 12px;
-    background: #26a116;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.food-card input {
-    width: 50px;
-    text-align: center;
-}
-
-
+    body { font-family: Arial; max-width: 900px; margin: 40px auto; padding: 20px; line-height: 1.6; background: #f9f9f9; }
+    h1 { color: #0077b5; margin-bottom: 5px; }
+    h2 { color: #333; border-bottom: 2px solid #0077b5; padding-bottom: 5px; }
+    .about { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    .project { background: white; border: 1px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 8px; }
+    .btn { display: inline-block; padding: 10px 20px; background: #0077b5; color: white; text-decoration: none; border-radius: 5px; margin-right: 10px; margin-top: 10px; }
+    .btn:hover { background: #005582; }
+    .skills { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    .skills span { display: inline-block; background: #e1f0fa; padding: 5px 12px; margin: 5px; border-radius: 20px; }
   </style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="nav-top">
-      <div class="logo"><img src="logo.jpg" alt="Logo" /></div>
-      <div class="brand-name">ZAIQA ZOOM</div>
-    </div>
-    <div class="nav-bottom">
-      <div class="nav-center">
-        <a href="#" onclick="reloadHome()">Home</a>
-        <a href="#" onclick="loadPage(event, 'menu.html')">Menu</a>
-        <a href="#" onclick="loadPage(event, 'payment mathod.html')">Payment</a>
-        <a href="#" onclick="loadPage(event, 'About.html')">About</a>
-      </div>
-      <div class="nav-search">
-        <form id="searchForm">
-          <input type="text" id="searchInput" class="search-input" placeholder="Search food..." />
-          <button type="submit" class="search-btn">🔍</button>
-        </form>
-      </div>
-    </div>
-  </nav>
+  <h1>Zoya</h1>
+  <p>Frontend Web Developer</p>
 
-  <!-- 🔍 Search Popup -->
-  <div id="search-popup">
-    <button class="close-btn" onclick="closePopup()">✖</button>
-    <h3>Search Result</h3>
-    <div id="search-result"></div>
-  </div>
-<!-- WhatsApp bubble -->
-<a href="https://wa.me/923052867870" target="_blank" id="whatsapp-bubble">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"> 💬 Need Help? Chat with us
-</a>
-
-<!-- Proceed button -->
-<button id="proceed-btn" onclick="proceedToPayment()">Proceed to Payment (0)</button>
-  <!-- Main Content -->
-  <div id="main-content">
-    <div id="slider-section" class="slider">
-      <img src="E.jpg" class="active" />
-      <img src="m.jpg" />
-      <img src="B.jpg" />
-      <img src="C.jpg" />
-      <img src="D.jpg" />
-      <img src="F.jpg" />
-      <img src="H.jpg" />
-      <img src="k.jpg" />
-      <img src="G.jpg" />
-      <img src="j.jpg" />
-      <img src="m.jpg" />
-    </div>
-    <div id="content-container"><iframe id="content-frame" src=""></iframe></div>
+  <div class="about">
+    <h2>About Me</h2>
+    <p>I am a passionate Web Development student currently doing a Development Course. I have completed CIT twice and DIT, with hands-on experience in HTML, CSS, JavaScript, Java, and Database Management. I specialize in creating responsive frontend websites and continue to learn new technologies.</p>
   </div>
 
-  <!-- Footer -->
-  <div class="footer">
-    <p><strong>&copy; 2025</strong> ZAIQA ZOOM</p>
-    <p>For inquiries: <a href="mailto:zaiqazoom1@gmail.com">zaiqazoom1@gmail.com</a></p>
-    <div class="icons">
-      <a href="https://www.youtube.com/@ZAIQAZOOM-v9f"><img src="youtube.png" alt="YouTube" /></a>
-      <a href="https://www.facebook.com/profile.php?id=61578600316409"><img src="facebook.png" alt="Facebook" /></a>
-      <a href="https://www.tiktok.com/@zaiqa.zoom?_t=ZS-8z7wtJGLOU&_r=1"><img src="tiktok.png" alt="TikTok" /></a>
-      <a href="https://www.instagram.com/zaiqazoom?igsh=ZMV0MmUzZDRsd2tt"><img src="instagram.png" alt="Instagram" /></a>
-    </div>
+  <div class="skills">
+    <h2>Skills</h2>
+    <span>HTML</span>
+    <span>CSS</span>
+    <span>JavaScript</span>
+    <span>Java</span>
+    <span>Database</span>
+    <span>Responsive Design</span>
   </div>
 
+  <h2>My Projects</h2>
 
+  <div class="project">
+    <h3>Zaiqa Zoom</h3>
+    <p>A restaurant/food website where users can browse menu items and place orders online. Built using HTML, CSS, and JavaScript.</p>
+    <a href="https://zoyajutti12.github.io/Zaiqa-Zoom/?v=1" class="btn">Live Demo</a>
+    <a href="https://zoyajutti12.github.io/Zaiqa-Zoom/?v=1" class="btn">Code</a>
+  </div>
 
-  <script>
-// Slider
-var cart = JSON.parse(localStorage.getItem('zaiqaCart')) || {};
+  <div class="project">
+    <h3>Ehsaas Institute VIT Moro</h3>
+    <p>A complete website for an educational institute showing courses, admission info, and contact details. Designed to be responsive on all devices.</p>
+    <a href="https://zoyajutti12.github.io/EHSAAS_INSTITUTE_VIT_MORO-/index.html" class="btn">Live Demo</a>
+    <a href="https://zoyajutti12.github.io/EHSAAS_INSTITUTE_VIT_MORO-/index.html" class="btn">Code</a>
+  </div>
 
-const slides = document.querySelectorAll('.slider img'); 
-let currentSlide = 0;
+  <h2>Contact</h2>
+  <p>Email: juttimonster@gmail.com | LinkedIn: <a href="https://www.linkedin.com/in/zoya-arain-2a21bb411?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">linkedin.com/in/zoya-arain-2a21bb411</a></p>
 
-function showSlide(i){
-  slides.forEach((img,idx)=>{
-    img.classList.remove('active');
-    if(idx===i) img.classList.add('active');
-  });
-}
-
-setInterval(()=>{
-  currentSlide=(currentSlide+1)%slides.length;
-  showSlide(currentSlide);
-},3000);
-
-
-// Page load system
-function loadPage(e,page){
-  if(e) e.preventDefault();
-  document.getElementById('slider-section').style.display='none';
-  document.getElementById('content-container').style.display='block';
-  document.getElementById('content-frame').src=page;
-}
-
-function reloadHome(){
-  document.getElementById('slider-section').style.display='block';
-  document.getElementById('content-container').style.display='none';
-  document.getElementById('content-frame').src='';
-  location.reload();
-}
-
-
-    // Foods List
-    const foods = [
-    "Chicken Biryani Rs.350","Zinger Burger Rs.450","Chicken Karahi Rs.1200","Seekh Kabab Rs.600",
-"Chicken Pizza Rs.900","French Fries Rs.200","Chicken Shawarma Rs.250","Ice Cream Rs.150",
-"Beef Burger Rs.500","Chicken Roll Rs.180","Gol Gappa Rs.120","Aaloo Samosa Rs.60",
-"Chicken Samosa Rs.80","Fruit Chaat Rs.150","Dahi Bhalla Rs.130","Chicken Pasta Rs.400",
-"Veg Pasta Rs.350","White Sauce Pasta Rs.450","Chicken Soup Rs.250","Hot and Sour Soup Rs.270",
-"Mutton Karahi Rs.2200","Beef Karahi Rs.2000","Fish Fry Rs.900","Grilled Fish Rs.1200",
-"Prawn Curry Rs.1500","Chicken Manchurian Rs.750","Egg Fried Rice Rs.300","Chicken Fried Rice Rs.350",
-"Veg Fried Rice Rs.320","Plain Roti Rs.20","Butter Naan Rs.50","Garlic Naan Rs.80",
-"Tandoori Roti Rs.30","Paratha Rs.60","Lachha Paratha Rs.80","Halwa Puri Rs.200",
-"Chana Curry Rs.150","Daal Fry Rs.180","Mix Vegetable Rs.200","Palak Paneer Rs.350",
-"Mutton Korma Rs.1500","Beef Korma Rs.1400","Chicken Korma Rs.900","Lassi Rs.100",
-"Mango Shake Rs.150","Banana Shake Rs.140","Strawberry Shake Rs.180","Cold Coffee Rs.200",
-"Hot Coffee Rs.150","Tea Rs.60","Green Tea Rs.80","Kashmiri Tea Rs.120","Cola Rs.80",
-"Lemonade Rs.100","Mint Margarita Rs.150","Orange Juice Rs.180","Apple Juice Rs.180",
-"Pineapple Juice Rs.200","Watermelon Juice Rs.160","Chocolate Cake Rs.400","Vanilla Cake Rs.380",
-"Red Velvet Cake Rs.450","Black Forest Cake Rs.420","Brownie Rs.150","Cupcake Rs.120",
-"Donut Rs.100","Croissant Rs.150","Cheese Sandwich Rs.200","Chicken Sandwich Rs.250",
-"Club Sandwich Rs.300","BBQ Platter Rs.1500","Grilled Chicken Rs.800","Fried Chicken Rs.600",
-"Butter Chicken Rs.950","Honey Chilli Potato Rs.300","Paneer Tikka Rs.500","Malai Boti Rs.850",
-"Reshmi Kebab Rs.700","Tikka Boti Rs.650","Chicken Tikka Rs.500","Beef Steak Rs.1600",
-"Chicken Steak Rs.1200","Veg Burger Rs.300","Falooda Rs.250","Gajar Halwa Rs.300",
-"Kheer Rs.200","Gulab Jamun Rs.150","Rasgulla Rs.150","Jalebi Rs.100","Sohan Halwa Rs.250",
-"Pakora Rs.120","Chicken Pakora Rs.180","Onion Rings Rs.150","Spring Roll Rs.200",
-"Veg Roll Rs.150","Momos Rs.250","Dim Sum Rs.280","Sushi Rs.800","Ramen Rs.500",
-"Noodles Rs.300","Spaghetti Rs.400","Lasagna Rs.600","Macaroni Rs.350"
-
-    ];
-
-
-    
-// Initialize cart from localStorage
-var cart = JSON.parse(localStorage.getItem('zaiqaCart')) || {};
-
-// --- Naya Function: Popup band karne ke liye ---
-function closePopup() {
-  var popup = document.getElementById("search-popup");
-  if(popup) {
-    popup.style.display = "none";
-  }
-}
-
-// Function to add item to cart
-function addToCartFromMenu(name, price){
-  if(!cart[name]) cart[name]={price:price, qty:0};
-  cart[name].qty +=1;
-  localStorage.setItem('zaiqaCart', JSON.stringify(cart));
-  updateProceedBtn();
-}
-
-// Update Proceed Button
-function updateProceedBtn(){
-  let count=0;
-  Object.values(cart).forEach(c=> count+=c.qty);
-  let btn = document.getElementById('proceed-btn');
-  if(btn) btn.innerText = 'Proceed to Payment ('+count+')';
-}
-
-// Proceed to Payment
-function proceedToPayment(){
-  if(Object.keys(cart).length===0){
-    alert("Cart is empty!");
-    return;
-  }
-
-  localStorage.setItem('zaiqaCart', JSON.stringify(cart));
-  
-  // Yahan popup band ho raha hai
-  closePopup(); 
-
-  // Hide slider / main content
-  document.getElementById('slider-section').style.display='none';
-  document.getElementById('content-container').style.display='block';
-
-  // Load payment page in iframe
-  document.getElementById('content-frame').src='payment mathod.html';
-}
-
-// Render Search Result Add
-document.getElementById("searchForm").addEventListener("submit", function(e){
-  e.preventDefault();
-  const input = document.getElementById("searchInput");
-  const query = input.value.trim().toLowerCase();
-  const popup = document.getElementById("search-popup");
-  const resultBox = document.getElementById("search-result");
-
-  if(!query){
-    closePopup();
-    return;
-  }
-
-  const found = foods.find(item => item.toLowerCase().includes(query));
-
-  if(found){
-    resultBox.innerHTML = 
-      "✅ " + found +
-      `<div style='display:flex;justify-content:center;align-items:center;gap:6px;margin:8px 0;'>
-         <button onclick="var i=this.parentNode.querySelector('input');i.value=Math.max(1,parseInt(i.value)-1)">-</button>
-         <input type='number' min='1' value='1' style='width:50px;text-align:center;'>
-         <button onclick="var i=this.parentNode.querySelector('input');i.value=Math.min(999,parseInt(i.value)+1)">+</button>
-       </div>
-       <button style='padding:8px 12px;background:#26a116;color:white;border:none;border-radius:6px;font-weight:bold;cursor:pointer;'
-       onclick="addSearchItemToCart(this, '${found}')">Add to Cart</button>`;
-  } else {
-    resultBox.innerHTML="❌ No food found!";
-  }
-
-  popup.style.display="block";
-  input.value="";
-});
-
-function addSearchItemToCart(btn, itemText) {
-  var qty = 1;
-  var parent = btn.parentElement;
-  var input = parent.querySelector('input');
-  
-  if (!input) {
-      input = parent.previousElementSibling ? parent.previousElementSibling.querySelector('input') : null;
-  }
-
-  if (input) {
-    qty = parseInt(input.value || '1');
-  }
-
-  var name = itemText.split(" Rs.")[0];
-  var price = parseInt(itemText.replace(/\D/g, ''), 10);
-
-  if (!cart[name]) cart[name] = { price: price, qty: 0 };
-  cart[name].qty += qty;
-
-  localStorage.setItem('zaiqaCart', JSON.stringify(cart));
-  updateProceedBtn();
- 
-}
-
-// Ye function index.html me rakho, menu ya search dono use kar sake
-window.addToCartFromMenu = function(name, price, qty = 1) {
-    if (!cart[name]) cart[name] = { price: price, qty: 0 };
-    cart[name].qty += qty; // quantity add kare
-    localStorage.setItem('zaiqaCart', JSON.stringify(cart));
-    updateProceedBtn(); // Proceed button count update
-    console.log(name + " x" + qty + " added to cart");
-};
-
-// Load counter on page start
-updateProceedBtn();
-</script>
+</body>
+</html>
